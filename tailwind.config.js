@@ -20,6 +20,7 @@ module.exports = {
         'height': '812px',
         'topBarHeight': '52px', 
         'headerHeight': '48px', 
+        'messageAreaHeight':'631px',
         'chatBarHeight': '68px', 
         'inputHeight': '40px', 
         'indicatorHeight': '13px', 
