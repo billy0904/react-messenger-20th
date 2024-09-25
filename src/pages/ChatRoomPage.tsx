@@ -1,9 +1,13 @@
+import Header from '../components/ChatRoomPage/Header';
 import TopBar from '../components/ChatRoomPage/TopBar';
 
 const ChatRoomPage = () => {
 
     return (
-        <TopBar />
+        <div>
+            <TopBar />
+            <Header />
+        </div>
     );
 }
 

@@ -5,7 +5,7 @@ module.exports = {
     colors: {
       'Purple/3': '#D3B8FF',
       'White': '#FFFFFF',
-
+      'Gray/2': '#666666',
     },
     extend: {
       width: {
@@ -14,6 +14,7 @@ module.exports = {
       height: {
         'height': '812px',
         'topBarHeight': '52px', 
+        'headerHeight': '48px', 
       },
     }
   },
