@@ -1,17 +1,13 @@
 import backIcon from "../../assets/ChatRoom/back.svg";
 import searchIcon from "../../assets/ChatRoom/search.svg";
 import menuIcon from "../../assets/ChatRoom/menu.svg";
-import { UserData } from '../../lib/UserData';
-import { useState } from 'react';
 
-const Header = () => {
-    const [currentUser, setCurrentUser] = useState(UserData[0]);
+interface HeaderProps {
+    currentUser: { userId: number, userName: string };
+    toggleUser: () => void;
+}
 
-    const toggleUser = () => {
-        setCurrentUser(prevUser =>
-            prevUser.userId === 0 ? UserData[1] : UserData[0]
-        );
-    };
+const Header: React.FC<HeaderProps> = ({ currentUser, toggleUser }) => {
 
     return (
         <div className="w-full h-headerHeight bg-White flex items-center justify-between pl-[9px]">
