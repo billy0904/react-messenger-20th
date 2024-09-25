@@ -1,7 +1,11 @@
+import ChatRoomPage from './pages/ChatRoomPage';
+
 function App() {
   return (
-    <div>
-      <h1>20기 프론트엔드 파이팅!!! 디자인과 사이좋게 지내요~~~</h1>
+    <div className='flex items-center justify-center h-screen'>
+      <div className='w-width h-height bg-Purple/3'>
+      <ChatRoomPage />
+      </div>
     </div>
   );
 }
