@@ -21,8 +21,6 @@ const ChatRoomPage = () => {
         setMessages(prevMessages => [...prevMessages, { senderId: currentUser.userId, text: message }]);
     };
 
-    const otherUser = currentUser.userId === 0 ? UserData[1] : UserData[0];
-
     return (
         <div className='w-width h-height bg-Purple/3 relative'>
             <TopBar />
