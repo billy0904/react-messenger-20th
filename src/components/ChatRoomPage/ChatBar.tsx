@@ -27,7 +27,7 @@ const ChatBar = ({ onSendMessage }: { onSendMessage: (message: string) => void }
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="메시지 입력하기"
-                    className="w-full h-full bg-Gray/5 rounded-full placeholder-Gray/4 font-['Pretendard'] pl-[12px]"
+                    className="w-full h-full bg-Gray/5 rounded-full placeholder-Gray/4 font-['Pretendard'] pl-[12px] pr-[40px]"
                 />
                 
                 {/* 이모티콘 버튼 */}
