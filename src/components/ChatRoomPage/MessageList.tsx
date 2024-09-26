@@ -109,7 +109,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
                     </div>
                 );
             })}
-            {/* 스크롤 위치 유지 */}
+            {/* 스크롤 위치 유지*/}
             <div ref={scrollRef} />
         </div>
     );

@@ -41,12 +41,12 @@ const ChatBar = ({ onSendMessage }: { onSendMessage: (message: string) => void }
                     }}
                     placeholder="메시지 입력하기"
                     className={`transition-all duration-300 w-inputWidth h-inputHeight rounded-full placeholder-Gray/4 font-['Pretendard'] pl-[12px] pr-[40px] bg-Gray/5 ${
-                        isInputFocused ? 'w-[calc(100%-20px)] mr-0' : 'w-inputWidth'
+                        isInputFocused ? 'w-[277px]' : 'w-inputWidth'
                     }`}
                 />
 
                 {/* 이모티콘 버튼 */}
-                <div className={`absolute right-[30px] transition-all duration-300 ${isInputFocused ? 'right-[48px]' : 'right-[12px]'}`}>
+                <div className={`absolute right-[30px] transition-all duration-300 ${isInputFocused ? 'right-[30px]' : 'right-[12px]'}`}>
                     <img
                         src={emoticon}
                         alt="emoticon"
