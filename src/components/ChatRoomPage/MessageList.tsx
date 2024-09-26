@@ -1,5 +1,6 @@
 import React from 'react';
 import profileIcon from "../../assets/ChatRoom/profile.svg";
+import { formatTime } from '../../utils/ClockUtils';
 
 interface User {
     userId: number;
@@ -18,29 +19,21 @@ interface MessageListProps {
     users: User[];
 }
 
-const formatTime = (date: Date) => {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? '오후' : '오전';
-    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-    return `${ampm} ${formattedHours}:${minutes < 10 ? '0' : ''}${minutes}`;
-};
-
 // 사용자와 시간(분 단위)으로 메시지 그룹화
 const groupMessages = (messages: Message[]) => {
-    return messages.reduce((acc, message, index) => {
+    return messages.reduce((arr, message, index) => {
         const timeKey = formatTime(message.timestamp);
         const prevMessage = messages[index - 1];
         const isSameSender = prevMessage && prevMessage.senderId === message.senderId;
         const isSameMinute = prevMessage && formatTime(prevMessage.timestamp) === timeKey;
 
         if (!isSameSender || !isSameMinute) {
-            acc.push({ timeKey, senderId: message.senderId, messages: [message] });
+            arr.push({ timeKey, senderId: message.senderId, messages: [message] });
         } else {
-            acc[acc.length - 1].messages.push(message);
+            arr[arr.length - 1].messages.push(message);
         }
 
-        return acc;
+        return arr;
     }, [] as { timeKey: string; senderId: number; messages: Message[] }[]);
 };
 
