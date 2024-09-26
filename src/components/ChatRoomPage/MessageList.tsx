@@ -66,7 +66,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
                     <div key={groupIndex} className="mb-4">
                         {/* 타임스탬프 출력 */}
                         {shouldDisplayTime && (
-                            <div className="text-center text-White text-[12px] font-['Pretendard'] my-[16px]">
+                            <div className="text-center text-White text-[12px] font-['Pretendard'] my-[10px]">
                                 {group.timeKey}
                             </div>
                         )}
