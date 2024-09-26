@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import profileIcon from "../../assets/ChatRoom/profile.svg";
 import { formatTime } from '../../utils/ClockUtils';
 
@@ -49,6 +49,15 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
     // 이전 타임스탬프 저장
     let lastTimeDisplayed: string | null = null;
 
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    // 메시지가 전송될 때마다 하단으로 스크롤
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messages]);
+
     return (
         <div className="flex flex-col w-full h-messageAreaHeight font-['Pretendard'] px-4 py-2 overflow-y-auto scrollbar-hide">
             {groupedMessages.map((group, groupIndex) => {
@@ -83,7 +92,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
                                             </div>
                                         )}
                                         {/* 상대방 메시지 */}
-                                        <p className="px-[14px] py-[10px] max-w-[328px] rounded-[20px] break-all my-1 bg-White text-Gray/2">
+                                        <p className="px-[14px] py-[10px] max-w-[328px] rounded-[20px] break-all my-1 bg-White text-Gray/2 cursor-pointer">
                                             {message.text}
                                         </p>
                                     </div>
@@ -91,7 +100,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
 
                                 {/* 현재 사용자 메시지 출력 */}
                                 {message.senderId === currentUserId && (
-                                    <p className="px-[14px] py-[10px] max-w-[328px] rounded-[20px] break-all my-1 bg-Purple/1 text-White">
+                                    <p className="px-[14px] py-[10px] max-w-[328px] rounded-[20px] break-all my-1 bg-Purple/1 text-White cursor-pointer">
                                         {message.text}
                                     </p>
                                 )}
@@ -100,6 +109,8 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
                     </div>
                 );
             })}
+            {/* 스크롤 위치 유지 */}
+            <div ref={scrollRef} />
         </div>
     );
 };

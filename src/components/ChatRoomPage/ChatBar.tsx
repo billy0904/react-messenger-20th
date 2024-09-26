@@ -57,7 +57,7 @@ const ChatBar = ({ onSendMessage }: { onSendMessage: (message: string) => void }
 
             {/* 전송 아이콘 */}
             {isInputFocused && (
-                <button onClick={handleSendMessage} className="ml-[-9px] mr-[16px]">
+                <button onClick={handleSendMessage} className="ml-[-9px] mr-[16px] cursor-pointer">
                     <img src={sendIcon} alt="sendMessage" />
                 </button>
             )}
