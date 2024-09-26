@@ -8,7 +8,7 @@ import { UserData } from '../lib/UserData';
 
 const ChatRoomPage = () => {
     const [currentUser, setCurrentUser] = useState(UserData[0]);
-    const [messages, setMessages] = useState<{ senderId: number, text: string }[]>([]);
+    const [messages, setMessages] = useState<{ senderId: number, text: string, timestamp: Date }[]>([]);
 
     // 유저 토글 전환
     const toggleUser = () => {
@@ -18,7 +18,10 @@ const ChatRoomPage = () => {
     };
 
     const handleSendMessage = (message: string) => {
-        setMessages(prevMessages => [...prevMessages, { senderId: currentUser.userId, text: message }]);
+        setMessages(prevMessages => [
+            ...prevMessages,
+            { senderId: currentUser.userId, text: message, timestamp: new Date() } // timestamp 추가
+        ]);
     };
 
     return (
