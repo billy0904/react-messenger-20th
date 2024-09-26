@@ -4,17 +4,18 @@ import menuIcon from "../../assets/ChatRoom/menu.svg";
 
 interface HeaderProps {
     currentUser: { userId: number, userName: string };
+    opponentUser: { userId: number, userName: string };
     toggleUser: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentUser, toggleUser }) => {
+const Header: React.FC<HeaderProps> = ({ currentUser, opponentUser, toggleUser }) => {
 
     return (
         <div className="w-full h-headerHeight bg-White flex items-center justify-between pl-[9px]">
             <div className="flex items-center space-x-[2px]">
                 <img src={backIcon} alt="GoBack"/>
                 <p onClick={toggleUser} className="text-Gray/2 text-2xl font-['Pretendard'] font-semibold cursor-pointer">
-                    {currentUser.userName}
+                    {opponentUser.userName}
                 </p>
             </div>
 

@@ -1,6 +1,11 @@
 import React from 'react';
 import profileIcon from "../../assets/ChatRoom/profile.svg";
 
+interface User {
+    userId: number;
+    userName: string;
+}
+
 interface Message {
     senderId: number;
     text: string;
@@ -10,6 +15,7 @@ interface Message {
 interface MessageListProps {
     messages: Message[];
     currentUserId: number;
+    users: User[];
 }
 
 const formatTime = (date: Date) => {
@@ -32,8 +38,14 @@ const groupMessagesByMinute = (messages: Message[]) => {
     }, {} as { [key: string]: Message[] });
 };
 
-const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId }) => {
+const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, users }) => {
     const groupedMessages = groupMessagesByMinute(messages);
+
+    // senderId로 사용자 이름 찾기
+    const getUserName = (senderId: number) => {
+        const user = users.find(user => user.userId === senderId);
+        return user ? user.userName : '(알 수 없음)';
+    };
 
     return (
         <div className="flex flex-col w-full h-messageAreaHeight font-['Pretendard'] px-4 py-2 overflow-y-auto scrollbar-hide">
@@ -46,21 +58,19 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId }) =>
                     {groupedMessages[time].map((message, idx) => (
                         <div key={idx} className={`flex ${message.senderId === currentUserId ? 'justify-end' : 'justify-start'} mb-[4px]`}>
                             {/* 상대방 메시지 블록 */}
-                            {message.senderId !== currentUserId && idx === 0 && (
+                            {message.senderId !== currentUserId && (
                                 <div className="flex flex-col items-start mr-2">
                                     {/* 상대방 프로필 아이콘 및 이름 */}
                                     <div className="flex items-center mb-[6px]">
-                                        <img src={profileIcon} alt="Profile"/>
-                                        <span className="ml-2 text-sm text-Gray/2 text-[16px] font-['Pretendard']">이가빈</span>
+                                        <img src={profileIcon} alt="Profile" className="mr-2" />
+                                        <p className="text-Gray/2 text-[16px] font-['Pretendard']">
+                                            {getUserName(message.senderId)}
+                                        </p>
                                     </div>
-                                    {/* 상대방 메시지 목록 */}
-                                    {groupedMessages[time]
-                                        .filter((msg) => msg.senderId !== currentUserId)
-                                        .map((msg, i) => (
-                                            <p key={i} className="px-[14px] py-[10px] max-w-[328px] rounded-[20px] break-all my-1 bg-White text-Gray/2">
-                                                {msg.text}
-                                            </p>
-                                        ))}
+                                        {/* 상대방 메시지 */}
+                                        <p className="px-[14px] py-[10px] max-w-[328px] rounded-[20px] break-all my-1 bg-White text-Gray/2">
+                                            {message.text}
+                                        </p>
                                 </div>
                             )}
 

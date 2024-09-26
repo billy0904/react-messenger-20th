@@ -10,7 +10,6 @@ const ChatBar = ({ onSendMessage }: { onSendMessage: (message: string) => void }
         if (e.key === 'Enter' && message.trim() !== '') {
             onSendMessage(message);
             setMessage('');
-            //window.localStorage.clear();
         }
     };
 
