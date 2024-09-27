@@ -8,10 +8,15 @@ export const currentTime = () => {
 };
 
 // 타임스탬프 포맷
-export const formatTime = (date: Date): string => {
+export const formatTime = (date: any): string => {
+    // Date 객체가 아닌 경우
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+        return 'Invalid date';
+    }
+
     const now = new Date();
     const diffInTime = now.getTime() - date.getTime();
-    const diffInDays = Math.floor(diffInTime / (1000 * 60 * 60 * 24)); // 일 단위 차이 계산
+    const diffInDays = Math.floor(diffInTime / (1000 * 60 * 60 * 24));
 
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -19,21 +24,15 @@ export const formatTime = (date: Date): string => {
     const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
     const timeString = `${ampm} ${formattedHours}:${minutes < 10 ? '0' : ''}${minutes}`;
 
-    // 날짜 포맷
     if (diffInDays === 0) {
-        // 오늘일 경우 시간만 표시
         return timeString;
     } else if (diffInDays === 1) {
-        // 어제일 경우
         return `(어제) ${timeString}`;
     } else if (diffInDays === 2) {
-        // 그저께일 경우
         return `(그저께) ${timeString}`;
     } else if (diffInDays <= 3) {
-        // 3일 전일 경우
         return `(${diffInDays}일 전) ${timeString}`;
     } else {
-        // 3일을 넘는 경우 MM/DD 형식으로
         const month = date.getMonth() + 1;
         const day = date.getDate();
         return `(${month}/${day}) ${timeString}`;

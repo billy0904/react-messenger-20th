@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import profileIcon from "../../assets/ChatRoom/profile.svg";
 import { formatTime } from '../../utils/ClockUtils';
+import { MessageData } from '../../lib/MessageData';
 
 interface User {
     userId: number;
@@ -19,7 +20,6 @@ interface MessageListProps {
     users: User[];
 }
 
-// 사용자와 시간(분 단위)으로 메시지 그룹화
 const groupMessages = (messages: Message[]) => {
     return messages.reduce((arr, message, index) => {
         const timeKey = formatTime(message.timestamp);
@@ -37,8 +37,9 @@ const groupMessages = (messages: Message[]) => {
     }, [] as { timeKey: string; senderId: number; messages: Message[] }[]);
 };
 
-const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, users }) => {
-    const groupedMessages = groupMessages(messages);
+const MessageList: React.FC<MessageListProps> = ({ currentUserId, users }) => {
+    const [messages, setMessages] = useState<Message[]>([]);
+    const scrollRef = useRef<HTMLDivElement>(null);
 
     // senderId로 사용자 이름 찾기
     const getUserName = (senderId: number) => {
@@ -46,17 +47,33 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
         return user ? user.userName : '(알 수 없음)';
     };
 
-    // 이전 타임스탬프 저장
-    let lastTimeDisplayed: string | null = null;
+    // MessageData와 로컬스토리지 메시지 병합
+    useEffect(() => {
+        // MessageData 메시지 가져오기
+        const initialMessages = MessageData.map(msg => ({
+            ...msg,
+            timestamp: new Date(msg.timestamp)
+        }));
 
-    const scrollRef = useRef<HTMLDivElement>(null);
+        // 로컬스토리지에서 메시지 가져오기
+        const storedMessages = JSON.parse(localStorage.getItem('messages') || '[]').map((msg: any) => ({
+            ...msg,
+            timestamp: new Date(msg.timestamp)
+        }));
+        
+        const combinedMessages = [...initialMessages, ...storedMessages];
+        setMessages(combinedMessages);
+    }, []);
 
-    // 메시지가 전송될 때마다 하단으로 스크롤
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [messages]);
+
+    const groupedMessages = groupMessages(messages);
+
+    let lastTimeDisplayed: string | null = null;
 
     return (
         <div className="flex flex-col w-full h-messageAreaHeight font-['Pretendard'] px-4 py-2 overflow-y-auto scrollbar-hide">
@@ -66,23 +83,19 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
 
                 return (
                     <div key={groupIndex} className="mb-4">
-                        {/* 타임스탬프 출력 */}
                         {shouldDisplayTime && (
                             <div className="text-center text-White text-[12px] font-['Pretendard'] my-[10px]">
                                 {group.timeKey}
                             </div>
                         )}
 
-                        {/* 메시지 그룹 출력 */}
                         {group.messages.map((message, idx) => (
                             <div
                                 key={idx}
                                 className={`flex ${message.senderId === currentUserId ? 'justify-end' : 'justify-start'} mb-[4px]`}
                             >
-                                {/* 상대방 메시지 블록 */}
                                 {message.senderId !== currentUserId && (
                                     <div className="flex flex-col items-start">
-                                        {/* 첫 번째 메시지일 경우에만 상대방 프로필 아이콘 및 이름 출력 */}
                                         {idx === 0 && (
                                             <div className="flex items-center mb-[6px]">
                                                 <img src={profileIcon} alt="Profile" className="mr-2" />
@@ -91,14 +104,11 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
                                                 </p>
                                             </div>
                                         )}
-                                        {/* 상대방 메시지 */}
                                         <p className="px-[14px] py-[10px] max-w-[328px] rounded-[20px] break-all my-1 bg-White text-Gray/2 cursor-pointer">
                                             {message.text}
                                         </p>
                                     </div>
                                 )}
-
-                                {/* 현재 사용자 메시지 출력 */}
                                 {message.senderId === currentUserId && (
                                     <p className="px-[14px] py-[10px] max-w-[328px] rounded-[20px] break-all my-1 bg-Purple/1 text-White cursor-pointer">
                                         {message.text}
@@ -109,7 +119,6 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, user
                     </div>
                 );
             })}
-            {/* 스크롤 위치 유지*/}
             <div ref={scrollRef} />
         </div>
     );

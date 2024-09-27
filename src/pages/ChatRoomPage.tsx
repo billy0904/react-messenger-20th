@@ -17,13 +17,14 @@ const ChatRoomPage = () => {
     useEffect(() => {
         const savedMessages = localStorage.getItem('messages');
         if (savedMessages) {
-            const parsedMessages = JSON.parse(savedMessages).map((msg: any) => ({
-                ...msg,
-                timestamp: new Date(msg.timestamp),
-            }));
+            const parsedMessages = JSON.parse(savedMessages).map((msg: any) => {
+                // timestamp 값을 Date 객체로 변환
+                return {
+                    ...msg,
+                    timestamp: new Date(msg.timestamp),
+                };
+            });
             setMessages(parsedMessages);
-            //window.localStorage.clear();
-            console.log(parsedMessages);
         }
     }, []);
 
@@ -34,7 +35,7 @@ const ChatRoomPage = () => {
         );
     };
 
-     // 메시지 전송 핸들러
+    // 메시지 전송 핸들러
     const handleSendMessage = (message: string) => {
         const newMessage = { senderId: currentUser.userId, text: message, timestamp: new Date() };
         
