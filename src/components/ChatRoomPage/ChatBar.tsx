@@ -40,13 +40,15 @@ const ChatBar = ({ onSendMessage }: { onSendMessage: (message: string) => void }
                         if (!message.trim()) setIsInputFocused(false);
                     }}
                     placeholder="메시지 입력하기"
-                    className={`transition-all duration-300 w-inputWidth h-inputHeight rounded-full placeholder-Gray/4 font-['Pretendard'] pl-[12px] pr-[40px] bg-Gray/5 ${
-                        isInputFocused ? 'w-[275px]' : 'w-inputWidth'
-                    }`}
+                    style={{
+                        transition: 'width 0.3s ease-in-out',
+                        width: isInputFocused ? '284px' : '308px',
+                    }}
+                    className={`transition-all duration-300 w-inputWidth h-inputHeight rounded-full placeholder-Gray/4 font-['Pretendard'] pl-[12px] pr-[40px] bg-Gray/5`}
                 />
 
                 {/* 이모티콘 버튼 */}
-                <div className={`absolute right-[30px] transition-all duration-300 ${isInputFocused ? 'right-[25px]' : 'right-5'}`}>
+                <div className="absolute right-[20px]">
                     <img
                         src={emoticon}
                         alt="emoticon"
@@ -58,8 +60,9 @@ const ChatBar = ({ onSendMessage }: { onSendMessage: (message: string) => void }
             {/* 전송 아이콘 */}
             <button 
                 onClick={handleSendMessage} 
-                className={`transition-all duration-300 cursor-pointer mr-[10px]`}
-                style={{ width: isInputFocused ? '30px' : '0px', height: '30px', overflow: 'hidden' }}
+                className={`transition-all duration-300 cursor-pointer mr-[10px]
+                ${isInputFocused ? 'opacity-100 visible w-[24px]' : 'opacity-0 invisible w-0'}`}
+                style={{ height: '24px' }}
             >
                 <img src={sendIcon} alt="sendMessage" />
             </button>
