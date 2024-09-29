@@ -16,23 +16,26 @@ const ChatRoomPage = () => {
     
     // 초기 메시지 및 로컬스토리지 메시지 불러오기
     useEffect(() => {
-        // MessageData 초기 메시지 가져오기
-        const initialMessages = MessageData.map(msg => ({
-            ...msg,
-            timestamp: new Date(msg.timestamp), // Date 객체로 변환
-        }));
-
         // 로컬스토리지 메시지 불러오기
         const savedMessages = localStorage.getItem('messages');
-        const parsedMessages = savedMessages
-            ? JSON.parse(savedMessages).map((msg: any) => ({
+        if (savedMessages) {
+            // 로컬스토리지에 저장된 메시지가 있으면 해당 데이터만 사용
+            const parsedMessages = JSON.parse(savedMessages).map((msg: any) => ({
                 ...msg,
-                timestamp: new Date(msg.timestamp), // Date 객체로 변환
-            }))
-            : [];
-
-        // 초기 메시지 + 로컬스토리지 메시지 병합
-        setMessages([...initialMessages, ...parsedMessages]);
+                timestamp: new Date(msg.timestamp),
+            }));
+            setMessages(parsedMessages);
+        } else {
+            // 로컬스토리지에 데이터가 없을 경우만 MessageData 사용
+            const initialMessages = MessageData.map(msg => ({
+                ...msg,
+                timestamp: new Date(msg.timestamp),
+            }));
+            setMessages(initialMessages);
+            
+            // 초기 메시지 로컬스토리지에 저장
+            localStorage.setItem('messages', JSON.stringify(initialMessages));
+        }
     }, []);
 
 
