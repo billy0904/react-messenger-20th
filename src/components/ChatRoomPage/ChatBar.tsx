@@ -46,7 +46,7 @@ const ChatBar = ({ onSendMessage }: { onSendMessage: (message: string) => void }
                 />
 
                 {/* 이모티콘 버튼 */}
-                <div className={`absolute right-[30px] transition-all duration-300 ${isInputFocused ? 'right-[30px]' : 'right-[12px]'}`}>
+                <div className={`absolute right-[30px] transition-all duration-300 ${isInputFocused ? 'right-[25px]' : 'right-5'}`}>
                     <img
                         src={emoticon}
                         alt="emoticon"
