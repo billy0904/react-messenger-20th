@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import profileIcon from "../../assets/ChatRoom/profile.svg";
 import { formatTime } from '../../utils/ClockUtils';
-import { MessageData } from '../../lib/MessageData';
 
 interface User {
     userId: number;
@@ -37,8 +36,7 @@ const groupMessages = (messages: Message[]) => {
     }, [] as { timeKey: string; senderId: number; messages: Message[] }[]);
 };
 
-const MessageList: React.FC<MessageListProps> = ({ currentUserId, users }) => {
-    const [messages, setMessages] = useState<Message[]>([]);
+const MessageList: React.FC<MessageListProps> = ({ currentUserId, messages, users }) => {
     const scrollRef = useRef<HTMLDivElement>(null);
 
     // senderId로 사용자 이름 찾기
@@ -46,24 +44,6 @@ const MessageList: React.FC<MessageListProps> = ({ currentUserId, users }) => {
         const user = users.find(user => user.userId === senderId);
         return user ? user.userName : '(알 수 없음)';
     };
-
-    // MessageData와 로컬스토리지 메시지 병합
-    useEffect(() => {
-        // MessageData 메시지 가져오기
-        const initialMessages = MessageData.map(msg => ({
-            ...msg,
-            timestamp: new Date(msg.timestamp)
-        }));
-
-        // 로컬스토리지에서 메시지 가져오기
-        const storedMessages = JSON.parse(localStorage.getItem('messages') || '[]').map((msg: any) => ({
-            ...msg,
-            timestamp: new Date(msg.timestamp)
-        }));
-        
-        const combinedMessages = [...initialMessages, ...storedMessages];
-        setMessages(combinedMessages);
-    }, []);
 
     useEffect(() => {
         if (scrollRef.current) {

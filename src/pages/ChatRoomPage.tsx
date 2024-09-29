@@ -5,6 +5,7 @@ import HomeIndicator from '../components/common/HomeIndicatior';
 import TopBar from '../components/common/TopBar';
 import MessageList from '../components/ChatRoomPage/MessageList';
 import { UserData } from '../lib/UserData';
+import { MessageData } from '../lib/MessageData';
 
 const ChatRoomPage = () => {
     const [currentUser, setCurrentUser] = useState(UserData[0]);
@@ -13,20 +14,27 @@ const ChatRoomPage = () => {
     // 상대방 유저 설정
     const opponentUser = currentUser.userId === 0 ? UserData[1] : UserData[0];
     
-    // 로컬 스토리지에서 메시지 불러오기
+    // 초기 메시지 및 로컬스토리지 메시지 불러오기
     useEffect(() => {
+        // MessageData 초기 메시지 가져오기
+        const initialMessages = MessageData.map(msg => ({
+            ...msg,
+            timestamp: new Date(msg.timestamp), // Date 객체로 변환
+        }));
+
+        // 로컬스토리지 메시지 불러오기
         const savedMessages = localStorage.getItem('messages');
-        if (savedMessages) {
-            const parsedMessages = JSON.parse(savedMessages).map((msg: any) => {
-                // timestamp 값을 Date 객체로 변환
-                return {
-                    ...msg,
-                    timestamp: new Date(msg.timestamp),
-                };
-            });
-            setMessages(parsedMessages);
-        }
+        const parsedMessages = savedMessages
+            ? JSON.parse(savedMessages).map((msg: any) => ({
+                ...msg,
+                timestamp: new Date(msg.timestamp), // Date 객체로 변환
+            }))
+            : [];
+
+        // 초기 메시지 + 로컬스토리지 메시지 병합
+        setMessages([...initialMessages, ...parsedMessages]);
     }, []);
+
 
     // 유저 토글 전환
     const toggleUser = () => {
