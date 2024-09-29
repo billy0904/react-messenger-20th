@@ -41,7 +41,7 @@ const ChatBar = ({ onSendMessage }: { onSendMessage: (message: string) => void }
                     }}
                     placeholder="메시지 입력하기"
                     className={`transition-all duration-300 w-inputWidth h-inputHeight rounded-full placeholder-Gray/4 font-['Pretendard'] pl-[12px] pr-[40px] bg-Gray/5 ${
-                        isInputFocused ? 'w-[277px]' : 'w-inputWidth'
+                        isInputFocused ? 'w-[275px]' : 'w-inputWidth'
                     }`}
                 />
 
@@ -56,11 +56,13 @@ const ChatBar = ({ onSendMessage }: { onSendMessage: (message: string) => void }
             </div>
 
             {/* 전송 아이콘 */}
-            {isInputFocused && (
-                <button onClick={handleSendMessage} className="ml-[-9px] mr-[16px] cursor-pointer">
-                    <img src={sendIcon} alt="sendMessage" />
-                </button>
-            )}
+            <button 
+                onClick={handleSendMessage} 
+                className={`transition-all duration-300 cursor-pointer mr-[10px]`}
+                style={{ width: isInputFocused ? '30px' : '0px', height: '30px', overflow: 'hidden' }}
+            >
+                <img src={sendIcon} alt="sendMessage" />
+            </button>
         </div>
     );
 }
