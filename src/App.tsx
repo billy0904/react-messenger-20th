@@ -1,5 +1,6 @@
 import ChatRoomPage from './pages/ChatRoomPage';
 import ChatRoomListPage from './pages/ChatRoomListPage';
+import FriendListPage from './pages/FriendListPage';
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -9,6 +10,8 @@ function App() {
         <Routes>
           <Route path='/chat' element={<ChatRoomPage />}></Route>
           <Route path='/chatlist' element={<ChatRoomListPage />}></Route>
+
+          <Route path='/friends' element={<FriendListPage />}></Route>
         </Routes>
       </div>
     </div>
