@@ -8,7 +8,7 @@ function App() {
     <div className='flex items-center justify-center h-screen bg-Gray/2'>
       <div className='w-width h-height'>
         <Routes>
-          <Route path='/chat' element={<ChatRoomPage />}></Route>
+          <Route path='/chat/:userId' element={<ChatRoomPage />}></Route>
           <Route path='/chatlist' element={<ChatRoomListPage />}></Route>
 
           <Route path='/friends' element={<FriendListPage />}></Route>

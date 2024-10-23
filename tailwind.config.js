@@ -5,9 +5,11 @@ module.exports = {
   theme: {
     colors: {
       'Purple/1': '#AB78FF',
+      'Purple/2': '#B98FFF',
       'Purple/3': '#D3B8FF',
       'White': '#FFFFFF',
       'Gray/2': '#666666',
+      'Gray/3': '#999999',
       'Gray/4' : "#CCCCCC",
       'Gray/5': '#EDEDED',
       'Black': '#000000',
@@ -26,6 +28,7 @@ module.exports = {
         'inputHeight': '40px', 
         'indicatorHeight': '13px', 
         'navBarHeight': '54px',
+        'ChatRoomComponentHeight': '60px',
       },
     }
   },
