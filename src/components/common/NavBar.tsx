@@ -7,7 +7,7 @@ import { ReactComponent as ShoppingIcon } from "../../assets/ChatRoomList/shoppi
 import { ReactComponent as MoreIcon } from "../../assets/ChatRoomList/more_icon.svg";
 
 const NavBar: React.FC = () => {
-    const basicBtnStyle = "text-Gray/2 text-[9px] font-['Pretendard'] flex flex-col items-center cursor-pointer";
+    const basicBtnStyle = "text-[9px] font-['Pretendard'] flex flex-col items-center cursor-pointer";
     const navigate = useNavigate();
     const location = useLocation();
     const [activePath, setActivePath] = useState(location.pathname);
@@ -28,7 +28,7 @@ const NavBar: React.FC = () => {
     }
 
     const getIconStyle = (path: string) => {
-        return activePath === path ? "#AB78FF" : "#A3A3A3";
+        return activePath === path ? "#AB78FF" : "#666666";
     }
 
     return (
