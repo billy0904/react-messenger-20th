@@ -27,8 +27,8 @@ module.exports = {
         'chatBarHeight': '68px', 
         'inputHeight': '40px', 
         'indicatorHeight': '13px', 
-        'navBarHeight': '54px',
-        'ChatRoomComponentHeight': '60px',
+        'navBarHeight': '70px',
+        'ChatRoomComponentHeight': '76px',
       },
     }
   },
