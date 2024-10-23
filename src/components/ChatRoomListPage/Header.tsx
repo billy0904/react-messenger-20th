@@ -8,7 +8,7 @@ const Header = () => {
     return (
         <div className="w-full h-headerHeight bg-White flex items-center justify-between">
             <div className="flex items-center space-x-[2px]">
-                <p className="text-Gray/2 text-2xl font-['Pretendard'] font-semibold cursor-pointer px-[16px]">
+                <p className="text-Gray/2 text-2xl font-['Pretendard'] font-semibold px-[16px]">
                     채팅
                 </p>
             </div>
