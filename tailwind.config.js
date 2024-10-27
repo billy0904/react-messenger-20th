@@ -29,6 +29,7 @@ module.exports = {
         'indicatorHeight': '13px', 
         'navBarHeight': '70px',
         'ChatRoomComponentHeight': '76px',
+        'profileTitleHeight': '86px',
       },
     }
   },
