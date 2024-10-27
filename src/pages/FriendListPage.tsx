@@ -2,14 +2,28 @@ import React, { useState, useEffect } from 'react';
 import HomeIndicator from '../components/common/HomeIndicatior';
 import TopBar from '../components/common/TopBar';
 import NavBar from '../components/common/NavBar';
-import Header from '../components/ChatRoomListPage/Header';
+import Header from '../components/FriendListPage/Header';
+import UserProfile from '../components/MyProfilePage/UserProfile';
+import UpdatedProfile from '../components/FriendListPage/UpdatedProfile';
+import Peong from '../components/FriendListPage/Peong';
+import Birthday from '../components/FriendListPage/Birthday';
+import FriendList from '../components/FriendListPage/FriendList';
 import Line from '../components/common/Line';
 
 const FriendListPage = () => {
     return (
-        <div className='w-width h-height bg-Purple/3 relative'>
+        <div className='w-width h-height bg-White relative'>
             <TopBar />
+            <Header />
+            <UserProfile />
             <Line />
+            <UpdatedProfile />
+            <Line />
+            <Peong />
+            <Line />
+            <Birthday />
+            <Line />
+            <FriendList />
             <div className='absolute bottom-0 w-width'>
                 <NavBar />
                 <HomeIndicator />
