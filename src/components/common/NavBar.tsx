@@ -44,7 +44,7 @@ const NavBar: React.FC = () => {
             <div onClick={() => onBtnClick("/chatlist")} className={`${getBtnStyle("/chatlist")} relative`} style={{color: getIconStyle("/chatlist")}}>
                 <ChatIcon />
                 {totalUnread > 0 && (
-                    <div className="absolute top-[1px] right-[-12px] text-[9px] font-medium font-['Pretendard'] text-White bg-Purple/2 rounded-[50px] w-5 h-[13px] flex items-center justify-center">
+                    <div className="absolute top-[1px] right-[-14px] text-[9px] font-medium font-['Pretendard'] text-White bg-Purple/2 rounded-[50px] w-5 h-[13px] flex items-center justify-center">
                         {totalUnread}
                     </div>
                 )}
