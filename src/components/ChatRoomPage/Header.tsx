@@ -5,12 +5,10 @@ import searchIcon from "../../assets/ChatRoom/search.svg";
 import menuIcon from "../../assets/ChatRoom/menu.svg";
 
 interface HeaderProps {
-    currentUser: { userId: number, userName: string };
     opponentUser: { userId: number, userName: string };
-    toggleUser: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentUser, opponentUser, toggleUser }) => {
+const Header: React.FC<HeaderProps> = ({ opponentUser }) => {
 
     const navigate = useNavigate();
 
@@ -21,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ currentUser, opponentUser, toggleUser }
         <div className="w-full h-headerHeight bg-White flex items-center justify-between pl-[9px]">
             <div className="flex items-center space-x-[2px]">
                 <img src={backIcon} onClick={handleBackClick} alt="GoBack" className='cursor-pointer'/>
-                <p onClick={toggleUser} className="text-Gray/2 text-2xl font-['Pretendard'] font-semibold cursor-pointer">
+                <p className="text-Gray/2 text-2xl font-['Pretendard'] font-semibold cursor-pointer">
                     {opponentUser.userName}
                 </p>
             </div>

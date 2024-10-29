@@ -19,22 +19,26 @@ const ChatRoomListPage: React.FC = () => {
     const [lastMessages, setLastMessages] = useState<{ [userId: number]: Message | null }>({});
 
     useEffect(() => {
-        const savedMessages = localStorage.getItem('messages');
-        if (savedMessages) {
-            const parsedMessages: Message[] = JSON.parse(savedMessages).map((msg: any) => ({
-                ...msg,
-                timestamp: new Date(msg.timestamp),
-            }));
+        const lastMessagesByUser: { [userId: number]: Message | null } = {};
 
-            const lastMessagesByUser: { [userId: number]: Message | null } = {};
-            UserData.forEach(user => {
-                // 각 유저의 마지막 메시지 찾기
-                const userMessages = parsedMessages.filter(msg => msg.senderId === user.userId);
-                lastMessagesByUser[user.userId] = userMessages.length > 0 ? userMessages[userMessages.length - 1] : null;
-            });
+        UserData.forEach(user => {
+            // 각 유저별 메시지 불러오기
+            const savedMessages = localStorage.getItem(`messages_${user.userId}`);
+            if (savedMessages) {
+                const parsedMessages: Message[] = JSON.parse(savedMessages).map((msg: any) => ({
+                    ...msg,
+                    timestamp: new Date(msg.timestamp),
+                }));
 
-            setLastMessages(lastMessagesByUser);
-        }
+                // 마지막 메시지 설정
+                lastMessagesByUser[user.userId] = parsedMessages.length > 0 ? parsedMessages[parsedMessages.length - 1] : null;
+            } else {
+                // 메시지가 없는 경우 null 설정
+                lastMessagesByUser[user.userId] = null;
+            }
+        });
+
+        setLastMessages(lastMessagesByUser);
     }, []);
     
     const handleChatRoomClick = (userId: number) => {

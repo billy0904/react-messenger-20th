@@ -1,11 +1,11 @@
 export const UserData = [
 	{
 		userId: 0,
-		userName: '이가빈',
+		userName: '김태양',
 	},
 	{
 		userId: 1,
-		userName: '김태양',
+		userName: '이가빈',
 	},
 	{
 		userId: 2,
