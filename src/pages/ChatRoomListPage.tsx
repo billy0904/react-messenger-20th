@@ -8,6 +8,7 @@ import Line from '../components/common/Line';
 import ChatRoomComponent from '../components/ChatRoomListPage/ChatRoomComponent';
 import { UserData } from '../lib/UserData';
 import { useUser } from '../contexts/UserContext';
+import { useUnread } from '../contexts/UnreadContext';
 
 interface Message {
     senderId: number;
@@ -21,6 +22,7 @@ const ChatRoomListPage: React.FC = () => {
     const { currentUser } = useUser();
     const [lastMessages, setLastMessages] = useState<{ [userId: number]: Message | null }>({});
     const [unread, setUnread] = useState<{ [userId: number]: number }>({});
+    const { calculateUnread } = useUnread();
 
     useEffect(() => {
         const newUnread: { [userId: number]: number } = {};
@@ -70,6 +72,7 @@ const ChatRoomListPage: React.FC = () => {
                 msg.senderId !== currentUser.userId ? { ...msg, read: true } : msg
             );
             localStorage.setItem(chatKey, JSON.stringify(messages));
+            calculateUnread();
         }
 
         // 클릭한 채팅방으로 이동
