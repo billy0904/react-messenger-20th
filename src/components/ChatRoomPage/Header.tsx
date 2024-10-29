@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ opponentUser }) => {
     const navigate = useNavigate();
 
     const handleBackClick = () => {
-        navigate(-1);
+        navigate('/chatlist');
     }
     return (
         <div className="w-full h-headerHeight bg-White flex items-center justify-between pl-[9px]">
