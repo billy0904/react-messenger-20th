@@ -38,7 +38,7 @@ const FriendList: React.FC = () => {
             </div>
             {!isFolded && (
                 <div>
-                    {UserData.map((user) => (
+                    {UserData.filter(user => user.userId !== currentUser?.userId).map((user) => (
                         <div
                             key={user.userId}
                             className="flex justify-start items-center px-[16px] py-[12px] cursor-pointer"

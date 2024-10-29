@@ -26,7 +26,7 @@ const ChatRoomListPage: React.FC = () => {
         UserData.forEach(user => {
             // 각 유저별 메시지 불러오기
             if (currentUser && user.userId !== currentUser.userId) {
-                // `currentUser`와 `user` 간의 공통 대화 키 생성
+                // currentUser와 user 간의 공통 대화 키 생성
                 const chatKey = `messages_${Math.min(currentUser.userId, user.userId)}_${Math.max(currentUser.userId, user.userId)}`;
                 const savedMessages = localStorage.getItem(chatKey);
                 if (savedMessages) {
@@ -56,7 +56,7 @@ const ChatRoomListPage: React.FC = () => {
     };
 
     return (
-        <div className='w-width h-height bg-Purple/3 relative'>
+        <div className='w-width h-height bg-White relative'>
             <TopBar />
             <Header />
             <Line />
