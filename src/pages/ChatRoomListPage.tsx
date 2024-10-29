@@ -25,6 +25,7 @@ const ChatRoomListPage: React.FC = () => {
     const { calculateUnread } = useUnread();
 
     useEffect(() => {
+        //localStorage.clear();
         const newUnread: { [userId: number]: number } = {};
         const lastMessagesByUser: { [userId: number]: Message | null } = {};
 

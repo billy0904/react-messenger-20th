@@ -29,9 +29,11 @@ const Peong = () => {
                         <img src={makeIcon} alt="makePeong" />
                         <p className="text-Gray/3 text-[12px] font-['Pretendard'] font-medium self-center mt-[9px]">만들기</p>
                     </div>
-                    <div className="flex flex-col ml-[8px] cursor-pointer">
+                    <div className="flex flex-col ml-[8px] cursor-pointer relative">
                         <img src={peongIcon} alt="userPeong" />
-                        <p className="text-Gray/2 text-[12px] font-['Pretendard'] font-medium self-center mt-[9px]">CEOS</p>
+                        <p className="text-Gray/2 text-[12px] font-['Pretendard'] font-medium self-center mt-[9px]">
+                        <img src={profileIcon} className="absolute top-[63px] right-[10px]"/>
+                        CEOS</p>
                     </div>
                 </div>
             )}
