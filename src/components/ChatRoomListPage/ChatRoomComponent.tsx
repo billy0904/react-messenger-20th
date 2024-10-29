@@ -22,7 +22,7 @@ const ChatRoomComponent: React.FC<ComponentProps> = ({ userId, lastMessage, onCl
             <img src={profileIcon} className='w-[44px]'></img>
             <div className='flex flex-col justify-center w-[203px] h-[53px] ml-[16px]'>
                 <span className="text-Gray/2 text-base font-medium font-['Pretendard'] h-[16px] justify-self-stretch align-middle leading-[100%] mb-[5px]">{user?.userName || '(알 수 없음)'}</span>
-                <span className="text-Gray/3 text-xs font-medium font-['Pretendard'] leading-[100%] line-clamp-2">{lastMessage?.text}</span>
+                <span className="text-Gray/3 text-xs font-medium font-['Pretendard'] leading-[130%] line-clamp-2">{lastMessage?.text}</span>
             </div>
             <div className='flex flex-col justify-start items-end w-[80px] h-[33px]'>
                 <span className="text-Gray/3 text-[9px] font-medium font-['Pretendard']">{lastMessage ? formatTimeForChatList(lastMessage.timestamp) : ''}</span>

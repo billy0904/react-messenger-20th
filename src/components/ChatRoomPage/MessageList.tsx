@@ -1,11 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import profileIcon from "../../assets/ChatRoom/profile.svg";
 import { formatTime } from '../../utils/ClockUtils';
-
-interface User {
-    userId: number;
-    userName: string;
-}
+import { useUser } from '../../contexts/UserContext';
 
 interface Message {
     senderId: number;
@@ -15,10 +11,9 @@ interface Message {
 
 interface MessageListProps {
     messages: Message[];
-    currentUserId: number;
-    users: User[];
 }
 
+// 메시지 그룹화 함수
 const groupMessages = (messages: Message[]) => {
     return messages.reduce((arr, message, index) => {
         const timeKey = formatTime(message.timestamp);
@@ -36,14 +31,9 @@ const groupMessages = (messages: Message[]) => {
     }, [] as { timeKey: string; senderId: number; messages: Message[] }[]);
 };
 
-const MessageList: React.FC<MessageListProps> = ({ currentUserId, messages, users }) => {
+const MessageList: React.FC<MessageListProps> = ({ messages }) => {
+    const { currentUser, opponentUser } = useUser();
     const scrollRef = useRef<HTMLDivElement>(null);
-
-    // senderId로 사용자 이름 찾기
-    const getUserName = (senderId: number) => {
-        const user = users.find(user => user.userId === senderId);
-        return user ? user.userName : '(알 수 없음)';
-    };
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -72,15 +62,15 @@ const MessageList: React.FC<MessageListProps> = ({ currentUserId, messages, user
                         {group.messages.map((message, idx) => (
                             <div
                                 key={idx}
-                                className={`flex ${message.senderId === currentUserId ? 'justify-end' : 'justify-start'} mb-[4px]`}
+                                className={`flex ${message.senderId === currentUser?.userId ? 'justify-end' : 'justify-start'} mb-[4px]`}
                             >
-                                {message.senderId !== currentUserId && (
+                                {message.senderId !== currentUser?.userId && (
                                     <div className="flex flex-col items-start">
                                         {idx === 0 && (
                                             <div className="flex items-center mb-[6px]">
                                                 <img src={profileIcon} alt="Profile" className="mr-2" />
                                                 <p className="text-Gray/2 text-[16px] font-['Pretendard']">
-                                                    {getUserName(message.senderId)}
+                                                    {opponentUser?.userName || '(알 수 없음)'}
                                                 </p>
                                             </div>
                                         )}
@@ -89,7 +79,7 @@ const MessageList: React.FC<MessageListProps> = ({ currentUserId, messages, user
                                         </p>
                                     </div>
                                 )}
-                                {message.senderId === currentUserId && (
+                                {message.senderId === currentUser?.userId && (
                                     <p className="px-[14px] py-[10px] max-w-[328px] rounded-[20px] break-all my-1 bg-Purple/1 text-White cursor-pointer">
                                         {message.text}
                                     </p>

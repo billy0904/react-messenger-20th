@@ -5,13 +5,8 @@ import Header from '../components/ChatRoomPage/Header';
 import HomeIndicator from '../components/common/HomeIndicatior';
 import TopBar from '../components/common/TopBar';
 import MessageList from '../components/ChatRoomPage/MessageList';
-import { UserData } from '../lib/UserData';
 import { MessageData } from '../lib/MessageData';
-
-interface User {
-    userId: number;
-    userName: string;
-}
+import { useUser } from '../contexts/UserContext';
 
 interface Message {
     senderId: number;
@@ -21,8 +16,7 @@ interface Message {
 
 const ChatRoomPage: React.FC = () => {
     const { userId } = useParams<{ userId: string }>();
-    const opponentUser = UserData.find(user => user.userId === parseInt(userId || ''));
-    const [currentUser] = useState<User | undefined>(UserData.find(user => user.userId === 0));
+    const { currentUser, opponentUser } = useUser();
     const [messages, setMessages] = useState<Message[]>([]);
     
     // 초기 메시지 및 로컬스토리지 메시지 불러오기
@@ -48,15 +42,9 @@ const ChatRoomPage: React.FC = () => {
             
             // 초기 메시지 로컬스토리지에 저장
             localStorage.setItem(`messages_${opponentUser.userId}`, JSON.stringify(initialMessages));
+
         }
     }, [opponentUser, currentUser]);
-
-    // // 유저 토글 전환
-    // const toggleUser = () => {
-    //     setCurrentUser(prevUser =>
-    //         prevUser.userId === 0 ? UserData[1] : UserData[0]
-    //     );
-    // };
 
     // 메시지 전송 핸들러
     const handleSendMessage = (message: string) => {
@@ -78,7 +66,7 @@ const ChatRoomPage: React.FC = () => {
         <div className='w-width h-height bg-Purple/3 relative'>
             <TopBar />
             <Header opponentUser={opponentUser} />
-            <MessageList messages={messages} currentUserId={currentUser?.userId || 0} users={UserData} />
+            <MessageList messages={messages} />
             <div className='absolute bottom-0 w-width'>
                 <ChatBar onSendMessage={handleSendMessage} />
                 <HomeIndicator />
