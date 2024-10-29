@@ -13,7 +13,7 @@ const FriendList = () => {
             </div>
             <div>
                 {UserData.map((user) => (
-                    <div key={user.userId} className="flex justify-start items-center px-[16px] py-[12px]">
+                    <div key={user.userId} className="flex justify-start items-center px-[16px] py-[12px] cursor-pointer">
                         <img src={profileIcon} alt='profile' className='w-[44px]'/>
                         <p className="text-Gray/2 text-[16px] font-['Pretendard'] font-medium leading-[150%] ml-[7px]">
                             {user.userName}
