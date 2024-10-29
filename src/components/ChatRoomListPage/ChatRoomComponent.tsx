@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import profileIcon from "../../assets/ChatRoom/profile.svg";
 import { UserData } from '../../lib/UserData';
 import { formatTimeForChatList } from '../../utils/ClockUtils';
@@ -12,9 +12,10 @@ interface ComponentProps {
     userId: number;
     lastMessage?: LastMessage;
     onClick: () => void;
+    unread: number;
 }
 
-const ChatRoomComponent: React.FC<ComponentProps> = ({ userId, lastMessage, onClick }) => {
+const ChatRoomComponent: React.FC<ComponentProps> = ({ userId, lastMessage, onClick, unread }) => {
     const user = UserData.find(user => user.userId === userId);
 
     return (
@@ -26,7 +27,11 @@ const ChatRoomComponent: React.FC<ComponentProps> = ({ userId, lastMessage, onCl
             </div>
             <div className='flex flex-col justify-start items-end w-[80px] h-[33px]'>
                 <span className="text-Gray/3 text-[9px] font-medium font-['Pretendard']">{lastMessage ? formatTimeForChatList(lastMessage.timestamp) : ''}</span>
-                <span className="text-White text-xs font-medium font-['Pretendard'] w-[19px] h-[19px] py-[2.5px] px-[5.5px] bg-Purple/2 rounded-[100px] mt-[5px] flex items-center justify-center">1</span>
+                {unread > 0 && (
+                    <span className="text-White text-xs font-medium font-['Pretendard'] w-[19px] h-[19px] py-[2.5px] px-[5.5px] bg-Purple/2 rounded-[100px] mt-[5px] flex items-center justify-center">
+                        {unread}
+                    </span>
+                )}
             </div>
         </div>
     );

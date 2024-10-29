@@ -13,14 +13,17 @@ interface Message {
     senderId: number;
     text: string;
     timestamp: Date;
+    read: boolean;
 }
 
 const ChatRoomListPage: React.FC = () => {
     const navigate = useNavigate();
     const { currentUser } = useUser();
     const [lastMessages, setLastMessages] = useState<{ [userId: number]: Message | null }>({});
+    const [unread, setUnread] = useState<{ [userId: number]: number }>({});
 
     useEffect(() => {
+        const newUnread: { [userId: number]: number } = {};
         const lastMessagesByUser: { [userId: number]: Message | null } = {};
 
         UserData.forEach(user => {
@@ -36,23 +39,41 @@ const ChatRoomListPage: React.FC = () => {
                     }));
 
                     lastMessagesByUser[user.userId] = parsedMessages.length > 0 ? parsedMessages[parsedMessages.length - 1] : null;
+                    newUnread[user.userId] = parsedMessages.filter(msg => !msg.read && msg.senderId !== currentUser.userId).length;
                 } else {
                     lastMessagesByUser[user.userId] = null;
+                    newUnread[user.userId] = 0;
                 }
             }
         });
 
         setLastMessages(lastMessagesByUser);
+        setUnread(newUnread);
     }, [currentUser]);
     
     const handleChatRoomClick = (userId: number) => {
         if (!currentUser) return;
 
         // chatKey 생성
-        const chatKey = `${Math.min(currentUser.userId, userId)}_${Math.max(currentUser.userId, userId)}`;
+        const chatKey = `messages_${Math.min(currentUser.userId, userId)}_${Math.max(currentUser.userId, userId)}`;
         
+        // 해당 채팅방의 안 읽은 메시지 개수 0으로 초기화
+        setUnread(prevUnread => ({
+            ...prevUnread,
+            [userId]: 0
+        }));
+
+        // 로컬스토리지에서 해당 채팅방의 모든 메시지를 읽음으로 표시
+        const savedMessages = localStorage.getItem(chatKey);
+        if (savedMessages) {
+            const messages: Message[] = (JSON.parse(savedMessages) as Message[]).map((msg: Message) =>
+                msg.senderId !== currentUser.userId ? { ...msg, read: true } : msg
+            );
+            localStorage.setItem(chatKey, JSON.stringify(messages));
+        }
+
         // 클릭한 채팅방으로 이동
-        navigate(`/chat/${chatKey}`);
+        navigate(`/chat/${Math.min(currentUser.userId, userId)}_${Math.max(currentUser.userId, userId)}`);
     };
 
     return (
@@ -67,6 +88,7 @@ const ChatRoomListPage: React.FC = () => {
                         userId={user.userId}
                         lastMessage={lastMessages[user.userId] || undefined}
                         onClick={() => handleChatRoomClick(user.userId)}
+                        unread={unread[user.userId] || 0}
                     />
                 )
             ))}

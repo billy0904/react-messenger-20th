@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { UserData } from '../lib/UserData';
 
 interface User {
@@ -22,9 +22,18 @@ interface UserProviderProps {
 }
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-    const [currentUser, setCurrentUser] = useState<User | null>(
-        UserData.find(user => user.userId === 0) || null
-    );
+    // 로컬스토리지에서 currentUser 가져오기
+    const storedUser = localStorage.getItem('currentUser');
+    const initialUser = storedUser ? JSON.parse(storedUser) : UserData.find(user => user.userId === 0) || null;
+
+    const [currentUser, setCurrentUser] = useState<User | null>(initialUser);
+
+    // currentUser가 변경될 때마다 로컬스토리지에 저장
+    useEffect(() => {
+        if (currentUser) {
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        }
+    }, [currentUser]);
 
     // currentUser의 userId에 따라 opponentUser 설정
     const opponentUser: User | null = currentUser?.userId === 0 
