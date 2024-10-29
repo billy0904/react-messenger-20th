@@ -26,7 +26,9 @@ const ChatRoomListPage: React.FC = () => {
         UserData.forEach(user => {
             // 각 유저별 메시지 불러오기
             if (currentUser && user.userId !== currentUser.userId) {
-                const savedMessages = localStorage.getItem(`messages_${user.userId}`);
+                // `currentUser`와 `user` 간의 공통 대화 키 생성
+                const chatKey = `messages_${Math.min(currentUser.userId, user.userId)}_${Math.max(currentUser.userId, user.userId)}`;
+                const savedMessages = localStorage.getItem(chatKey);
                 if (savedMessages) {
                     const parsedMessages: Message[] = JSON.parse(savedMessages).map((msg: any) => ({
                         ...msg,
@@ -44,8 +46,13 @@ const ChatRoomListPage: React.FC = () => {
     }, [currentUser]);
     
     const handleChatRoomClick = (userId: number) => {
+        if (!currentUser) return;
+
+        // chatKey 생성
+        const chatKey = `${Math.min(currentUser.userId, userId)}_${Math.max(currentUser.userId, userId)}`;
+        
         // 클릭한 채팅방으로 이동
-        navigate(`/chat/${userId}`);
+        navigate(`/chat/${chatKey}`);
     };
 
     return (

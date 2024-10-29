@@ -4,22 +4,25 @@ import profileIcon from "../../assets/ChatRoom/profile.svg";
 import foldIcon from "../../assets/FriendList/up_arrow.svg";
 import unfoldIcon from "../../assets/FriendList/down_arrow.svg";
 import { UserData } from '../../lib/UserData';
-
-interface User {
-    userId: number;
-    userName: string;
-}
+import { useUser } from '../../contexts/UserContext';
 
 const FriendList: React.FC = () => {
     const [isFolded, setIsFolded] = useState(false);
     const navigate = useNavigate();
+    const { currentUser } = useUser();
 
     const toggleFold = () => {
         setIsFolded(!isFolded);
     };
 
     const handleProfileClick = (userId: number) => {
-        navigate(`/chat/${userId}`);
+        if (!currentUser) return;
+
+        // chatKey 생성
+        const chatKey = `${Math.min(currentUser.userId, userId)}_${Math.max(currentUser.userId, userId)}`;
+
+        // 클릭한 채팅방으로 이동
+        navigate(`/chat/${chatKey}`);
     };
 
     return (

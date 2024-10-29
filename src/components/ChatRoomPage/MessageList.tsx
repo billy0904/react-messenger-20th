@@ -18,7 +18,7 @@ const groupMessages = (messages: Message[]) => {
     return messages.reduce((arr, message, index) => {
         const timeKey = formatTime(message.timestamp);
         const prevMessage = messages[index - 1];
-        const isSameSender = prevMessage && prevMessage.senderId === message.senderId;
+        const isSameSender = prevMessage && prevMessage?.senderId === message.senderId;
         const isSameMinute = prevMessage && formatTime(prevMessage.timestamp) === timeKey;
 
         if (!isSameSender || !isSameMinute) {
