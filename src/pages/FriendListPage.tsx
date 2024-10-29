@@ -15,15 +15,17 @@ const FriendListPage = () => {
         <div className='w-width h-height bg-White relative'>
             <TopBar />
             <Header />
-            <UserProfile />
-            <Line />
-            <UpdatedProfile />
-            <Line />
-            <Peong />
-            <Line />
-            <Birthday />
-            <Line />
-            <FriendList />
+            <div className="h-[635px] overflow-y-scroll scrollbar-hide">
+                <UserProfile />
+                <Line />
+                <UpdatedProfile />
+                <Line />
+                <Peong />
+                <Line />
+                <Birthday />
+                <Line />
+                <FriendList />
+            </div>
             <div className='absolute bottom-0 w-width'>
                 <NavBar />
                 <HomeIndicator />
