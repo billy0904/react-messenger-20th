@@ -3,6 +3,7 @@ import ChatRoomListPage from './pages/ChatRoomListPage';
 import FriendListPage from './pages/FriendListPage';
 import { Route, Routes } from 'react-router-dom';
 import MyProfilePage from './pages/MyProfilePage';
+import NotYetPage from './pages/NotYetPage';
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
 
           <Route path='/friends' element={<FriendListPage />}></Route>
           <Route path='/my' element={<MyProfilePage />}></Route>
+          <Route path='/openedChat' element={<NotYetPage />}></Route>
+          <Route path='/shopping' element={<NotYetPage />}></Route>
+          <Route path='/more' element={<NotYetPage />}></Route>
         </Routes>
       </div>
     </div>
