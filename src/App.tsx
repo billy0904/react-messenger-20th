@@ -14,6 +14,7 @@ function App() {
         <div className='flex items-center justify-center h-screen bg-Gray/2'>
           <div className='w-width h-height'>
             <Routes>
+              <Route path='/' element={<FriendListPage />}></Route>
               <Route path='/chat/:chatKey' element={<ChatRoomPage />}></Route>
               <Route path='/chatlist' element={<ChatRoomListPage />}></Route>
 
